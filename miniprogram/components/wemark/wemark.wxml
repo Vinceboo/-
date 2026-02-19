@@ -1,0 +1,38 @@
+<view class="wemark_wrapper">
+  <block wx:for="{{parsedContent}}" wx:key="index">
+    <!-- 图片 -->
+    <view wx:if="{{item.type === 'image'}}" 
+          class="wemark_block_image">
+      <image 
+        src="{{item.src}}" 
+        mode="widthFix" 
+        bindtap="previewImage"
+        data-src="{{item.src}}"
+        lazy-load
+      />
+    </view>
+    
+    <!-- 标题 -->
+    <view wx:elif="{{item.type === 'heading'}}" 
+          class="wemark_block_h{{item.level}}">
+      {{item.content}}
+    </view>
+    
+    <!-- 列表项 -->
+    <view wx:elif="{{item.type === 'list-item'}}"
+          class="wemark_block_list_item">
+      • {{item.content}}
+    </view>
+    
+    <!-- 粗体 -->
+    <view wx:elif="{{item.type === 'bold'}}"
+          class="wemark_inline_bold">
+      {{item.content}}
+    </view>
+    
+    <!-- 普通文本 -->
+    <view wx:else class="wemark_block_text">
+      {{item.content}}
+    </view>
+  </block>
+</view> 

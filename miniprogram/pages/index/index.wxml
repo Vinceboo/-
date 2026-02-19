@@ -1,0 +1,101 @@
+<!--index.wxml - Netflix x Apple HIG 电影界面-->
+<navigation-bar title="正在热映" back="{{false}}" color="white" background="#000000"></navigation-bar>
+
+<scroll-view class="page" scroll-y>
+
+  <!-- Hero Banner 精选电影 -->
+  <view wx:if="{{featuredMovie}}" class="hero" bindtap="onTapMovie" data-name="{{featuredMovie.name}}">
+    <image class="hero-image" src="{{featuredMovie.cover}}" mode="aspectFill" lazy-load></image>
+    <view class="hero-gradient"></view>
+    <view class="hero-content">
+      <text class="hero-label">今日精选</text>
+      <text class="hero-title">{{featuredMovie.name}}</text>
+      <view class="hero-meta">
+        <view class="stars-row">
+          <image
+            wx:for="{{featuredMovie.stars}}"
+            wx:for-item="star"
+            wx:for-index="si"
+            wx:key="si"
+            class="star-icon"
+            src="/image/{{star}}-star.svg"
+          ></image>
+        </view>
+        <text class="hero-score">{{featuredMovie.rate}} 分</text>
+      </view>
+      <text class="hero-box">票房 {{featuredMovie.boxOffice}}</text>
+      <view class="hero-actions">
+        <view class="btn-primary">
+          <text>▶  立即观看</text>
+        </view>
+        <view class="btn-secondary">
+          <text>更多信息</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 热映榜单 - 横向卡片 -->
+  <view class="section">
+    <text class="section-title">热映榜单</text>
+    <scroll-view class="card-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="card-list">
+        <view
+          wx:for="{{movies}}"
+          wx:key="name"
+          class="movie-card"
+          bindtap="onTapMovie"
+          data-name="{{item.name}}"
+        >
+          <image class="card-cover" src="{{item.cover}}" mode="aspectFill" lazy-load></image>
+          <view class="card-overlay"></view>
+          <view class="card-rank">{{index + 1}}</view>
+          <view class="card-info">
+            <text class="card-name">{{item.name}}</text>
+            <view class="card-stars">
+              <image
+                wx:for="{{item.stars}}"
+                wx:for-item="star"
+                wx:for-index="si"
+                wx:key="si"
+                class="star-sm"
+                src="/image/{{star}}-star.svg"
+              ></image>
+            </view>
+            <text class="card-box">{{item.boxOffice}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 全部影片 - 竖向列表 -->
+  <view class="section">
+    <text class="section-title">全部影片</text>
+    <view class="movie-list">
+      <view wx:for="{{movies}}" wx:key="name" class="list-item" bindtap="onTapMovie" data-name="{{item.name}}">
+        <image class="list-cover" src="{{item.cover}}" mode="aspectFill" lazy-load></image>
+        <view class="list-info">
+          <text class="list-name">{{item.name}}</text>
+          <view class="list-stars">
+            <image
+              wx:for="{{item.stars}}"
+              wx:for-item="star"
+              wx:for-index="si"
+              wx:key="si"
+              class="star-sm"
+              src="/image/{{star}}-star.svg"
+            ></image>
+            <text class="list-score">{{item.rate}} 分</text>
+          </view>
+          <text class="list-box">票房 {{item.boxOffice}}</text>
+        </view>
+        <text class="list-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部安全区域 -->
+  <view class="bottom-safe"></view>
+
+</scroll-view>

@@ -1,0 +1,9 @@
+node_modules/
+miniprogram_npm/
+unpackage/
+dist/
+.DS_Store
+.idea/
+.vscode/
+*.log
+project.private.config.json

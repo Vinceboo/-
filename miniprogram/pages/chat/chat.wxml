@@ -1,0 +1,67 @@
+<!--pages/chat/chat.wxml-->
+<navigation-bar title="{{title}}" back="{{true}}" color="white" background="#000000"></navigation-bar>
+
+<view class="container">
+
+  <!-- 消息列表区域 -->
+  <scroll-view
+    class="chat-list"
+    scroll-y
+    scroll-into-view="{{toView}}"
+    scroll-with-animation
+    enhanced
+    show-scrollbar="{{false}}"
+  >
+    <block wx:for="{{messages}}" wx:key="id">
+      <view id="msg-{{item.id}}" class="message-row {{item.isUser ? 'user-row' : 'ai-row'}}">
+
+        <!-- 用户气泡：纯文本 -->
+        <view wx:if="{{item.isUser}}" class="bubble user-bubble">
+          <text selectable>{{item.content}}</text>
+        </view>
+
+        <!-- AI 气泡：有内容时用 wemark 渲染 Markdown，无内容时显示加载动画 -->
+        <view wx:else class="bubble ai-bubble">
+          <view wx:if="{{item.content}}">
+            <wemark md="{{item.content}}" type="wemark"></wemark>
+          </view>
+          <view wx:else class="loading-dots">
+            <text class="dot">●</text>
+            <text class="dot">●</text>
+            <text class="dot">●</text>
+          </view>
+        </view>
+
+      </view>
+    </block>
+
+    <!-- 底部留白，防止内容被输入框遮挡 -->
+    <view class="list-bottom-padding"></view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <view class="input-wrapper {{isLoading ? 'input-wrapper--disabled' : ''}}">
+      <input
+        class="input-field"
+        placeholder="{{isLoading ? 'AI 正在回复…' : '继续提问…'}}"
+        placeholder-class="input-placeholder"
+        confirm-type="send"
+        bindconfirm="onSendMessage"
+        value="{{inputValue}}"
+        bindinput="onInput"
+        disabled="{{isLoading}}"
+        cursor-spacing="16"
+        adjust-position
+      />
+      <!-- 发送按钮：加载中呈灰色禁用外观 -->
+      <view
+        class="send-btn {{isLoading ? 'send-btn--disabled' : (inputValue ? 'send-btn--active' : '')}}"
+        bindtap="onTapSend"
+      >
+        <text class="send-icon">↑</text>
+      </view>
+    </view>
+  </view>
+
+</view>

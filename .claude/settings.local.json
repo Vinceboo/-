@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.coze.cn)",
+      "Bash(ls:*)"
+    ]
+  }
+}
